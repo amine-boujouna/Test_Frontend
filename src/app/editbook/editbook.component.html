@@ -1,0 +1,57 @@
+
+   <div class="error-container" *ngIf="errorMessage">
+    <div class="error-message">
+      <p>{{ errorMessage }}</p>
+      <button class="retry-button" (click)="retryRequest()">Réessayer</button>
+    </div>
+  </div>
+   
+   <mat-card class="example-card" *ngIf="!errorMessage">
+    <mat-card-header>
+      <mat-card-title>Update Book</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="bookForm" (ngSubmit)="updateBook()">
+        <div class="form-container">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Please enter title" formControlName="title" required>
+            <mat-error *ngIf="bookForm.get('title')?.hasError('required')">Please enter title</mat-error>
+            <mat-error *ngIf="bookForm.get('title')?.hasError('pattern')">Title must be a non-empty string containing only letters and spaces</mat-error>
+            
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Author</mat-label>
+            <input matInput placeholder="Please enter author" formControlName="author" required>
+            <mat-error *ngIf="bookForm.get('author')?.hasError('required')">Please enter author</mat-error>
+            <mat-error *ngIf="bookForm.get('author')?.hasError('pattern')">Author must be a non-empty string containing only letters and spaces</mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>ISBN</mat-label>
+            <input matInput placeholder="Please enter ISBN" formControlName="isbn" required>
+            <mat-error *ngIf="bookForm.get('isbn')?.hasError('required')">Please enter ISBN</mat-error>
+            <mat-error *ngIf="bookForm.get('isbn')?.hasError('pattern')">Invalid ISBN format</mat-error>
+
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Publication Year</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="publicationYear">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="bookForm.get('publicationYear')?.hasError('required')">Please choose a publication year</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="button-container">
+          <button mat-raised-button color="primary" class="submit-button" type="submit" [disabled]="bookForm.invalid">Update book</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <div *ngIf="successMessage" class="success-message-container">
+    <div class="success-message">
+      {{ successMessage }}
+    </div>
+  </div>

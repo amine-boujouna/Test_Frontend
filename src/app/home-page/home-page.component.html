@@ -1,0 +1,77 @@
+ <div class="navbar">
+  <img src="../../assets/maisonweb.png" alt="Logo" class="logo">
+  <h1 class="navbar-title">Book Management</h1>
+</div>
+<div class="mat-elevation-z8">
+  <div style="margin-bottom: 16px;" *ngIf="!errorMessage">
+    <button mat-icon-button color="primary" routerLink="/Addbooks">
+      <mat-icon>add</mat-icon>
+    </button>
+    
+  </div>
+  <div class="error-container" *ngIf="errorMessage">
+    <div class="error-message">
+      <p>{{ errorMessage }}</p>
+      <button class="retry-button" (click)="retryRequest()">Try again</button>
+    </div>
+  </div>
+  <div class="error-container" *ngIf="errorMessagedelete">
+    <div class="error-message">
+      <p>{{ errorMessagedelete }}</p>
+    </div>
+  </div>
+  <mat-table [dataSource]="dataSource" matSort *ngIf="!errorMessage">
+   
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+      <mat-cell *matCellDef="let book">{{ book.title }}</mat-cell>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="author">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Author</mat-header-cell>
+      <mat-cell *matCellDef="let book">{{ book.author }}</mat-cell>
+    </ng-container>
+
+   
+    <ng-container matColumnDef="publicationDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Publication Date</mat-header-cell>
+      <mat-cell *matCellDef="let book">{{ book.publicationYear | date }}</mat-cell>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="isbn">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>ISBN</mat-header-cell>
+      <mat-cell *matCellDef="let book">{{ book.isbn }}</mat-cell>
+    </ng-container>
+
+    
+     <ng-container matColumnDef="Action">
+      <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+      <mat-cell *matCellDef="let book">
+        <button mat-icon-button color="primary" [routerLink]="['/Editbooks', book.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteBook(book.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons  *ngIf="!errorMessage"></mat-paginator>
+</div>
+
+<div *ngIf="successMessage" class="success-message-container">
+  <div class="success-message">
+    {{ successMessage }}
+  </div>
+</div> 
+
+ 
+ 
