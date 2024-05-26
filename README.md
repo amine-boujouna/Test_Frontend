@@ -14,7 +14,7 @@ Ensure that the backend has endpoints for getting all books, adding a book, upda
 
 ## Setup Frontend
 
-nsure you have Angular CLI installed globally on your machine.
+Ensure you have Angular CLI installed globally on your machine.
 
 Navigate to the root directory of your Angular project.
 
